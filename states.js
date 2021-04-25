@@ -3,6 +3,9 @@
 // In cases where an invalid value is used, prompt the user to enter a valid US State abbreviation. 
 // i.e. given company = {companyName: “Clearbit”, stateCode: “CA”} you’ll return “California”.
 
+// Used this link for user-input: https://www.codecademy.com/articles/getting-user-input-in-node-js
+const prompt = require('prompt-sync')();
+
 // Create an object with all the state abbreviations and full names.
 let stateObject = {
   "AL": "Alabama",
@@ -59,12 +62,15 @@ let stateObject = {
 
 // console.log(stateObject);
 
-// Write the function that takes an user-created object with a key of “stateCode”, 
-// a US state abbreviation and converts the abbreviation to the value, the full State Name. 
+// Use example for testing
 let example = {
   "companyName": "Clearbit",
   "stateCode": "ak    !"
 }; 
+
+// Create a user input object.
+const userInput = prompt('What is your state code (abbreviation)? ');
+console.log('State code ${userInput}');
 
 // Function to clean user input (remove special characters, change to uppercase, remove whitespace)
 let stringCleaner = (str) => {
@@ -73,7 +79,7 @@ let stringCleaner = (str) => {
   return newString;
 }
 
-// 
+// Function to take in user input and check against json data
 const stateConvert = (data, userExample) => {
   // console.log('stateName', stateName);
   // console.log('stateObject', data);
