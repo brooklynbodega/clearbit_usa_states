@@ -3,11 +3,8 @@
 // In cases where an invalid value is used, prompt the user to enter a valid US State abbreviation. 
 // i.e. given company = {companyName: “Clearbit”, stateCode: “CA”} you’ll return “California”.
 
-
-// const stateCodes = require('./stateCodes.json');
-
-
-const stateCodes = {
+// Create an object with all the state abbreviations and full names.
+let stateObject = {
   "AL": "Alabama",
   "AK": "Alaska",
   "AZ": "Arizona",
@@ -60,14 +57,39 @@ const stateCodes = {
   "WY": "Wyoming"
 };
 
-consoleLog(stateCodes);
+// console.log(stateObject);
 
 // Write the function that takes an user-created object with a key of “stateCode”, 
 // a US state abbreviation and converts the abbreviation to the value, the full State Name. 
+let example = {
+  "companyName": "Clearbit",
+  "stateCode": "ak    !"
+}; 
 
-function stateName(input) {
-  for (let index = 0; index < array.length; index++) {
-    const element = array[index];
-    
-  }
+// Function to clean user input (remove special characters, change to uppercase, remove whitespace)
+let stringCleaner = (str) => {
+  let newString = str.replace(/[^a-zA-Z0-9.-]/g, "");
+  newString = newString.toUpperCase().trim();
+  return newString;
 }
+
+// 
+const stateConvert = (data, userExample) => {
+  // console.log('stateName', stateName);
+  // console.log('stateObject', data);
+  let abbreviation = stringCleaner(userExample.stateCode);
+  console.log(abbreviation);
+  // Results will be the fulle state name spelled out. 
+  let results = "Incorrect value";
+  // Iterate over the stateObject (data) to see if the userExample matches any key in the stateObject
+  for (let i in data) {
+    // console. log(i);
+    // Check to see if the abbreviation matches a key in any instance of a key in stateObject
+    if (abbreviation === i) {
+      results = data[i];
+    }
+  }
+  return results;
+}
+
+console.log(stateConvert(stateObject, example));
