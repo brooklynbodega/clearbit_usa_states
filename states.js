@@ -69,7 +69,7 @@ let stringCleaner = (str) => {
   return newString;
 };
 
-// Turn above variable into function
+// Function to convert a string into an object: https://stackoverflow.com/questions/1086404/string-to-object-in-js
 let stringToObject = (jsonStr) => {
   jsonStr.replace(/(\w+:)|(\w+ :)/g, function (matchedStr) {
     return '"' + matchedStr.substring(0, matchedStr.length - 1) + '":';
@@ -79,38 +79,30 @@ let stringToObject = (jsonStr) => {
   return jsonStr;
 };
 
-// Create a user input object.
-let userObject = prompt('What is your object? ');
-console.log("Your object is " + userObject);
-userObject = stringToObject(userObject);
-console.log(userObject);
-
-// Convert string to object: https://stackoverflow.com/questions/1086404/string-to-object-in-js
-// let jsonStr = userObject.replace(/(\w+:)|(\w+ :)/g, function (matchedStr) {
-//   return '"' + matchedStr.substring(0, matchedStr.length - 1) + '":';
-// });
-// console.log(jsonStr);
-
 
 
 // userObject = JSON.parse(jsonStr); //converts to a regular object
 // console.log(userObject);
 
 
-// Function to take in userObject and check against json data
-const dataMatch = (data, obj) => {
-  // console.log('stateName', stateName);
-  // console.log('stateObject', data);
-  if (!obj.stateCode) {
-    return "User Object Missing State Code";
+// Function to take in userObject and check against json data for a match.
+const dataMatch = (data) => {
+  // Create a user input object
+  let userObject = prompt('What is your object? ');
+  console.log("Your object is " + userObject);
+  userObject = stringToObject(userObject);
+  console.log(userObject);
+  // If the userObject does not have a stateCode, return invalid.
+  if (!userObject.stateCode) {
+    return "User Object is missing a state code. Please reenter.";
   };
   
-  let abbreviation = stringCleaner(obj.stateCode);
+  let abbreviation = stringCleaner(userObject.stateCode);
   console.log(abbreviation);
 
   // Results will be the fulle state name spelled out. 
   let results = false;
-  // Iterate over the stateObject (data) to see if the userExample matches any key in the stateObject
+  // Iterate over the stateObject (data) to see if the userExample matches any key in the stateObject.
   for (let i in data) {
     // console. log(i);
     // Check to see if the abbreviation matches a key in any instance of a key in stateObject
@@ -120,33 +112,15 @@ const dataMatch = (data, obj) => {
       return "Your full state name is " + stateName; // fix to temporate literal
     }
   }
+  // If the input does not match any state abbreviation, ask user to enter again. 
   return "Invalid state code given. Please run again with a valid state code."
 }
 
 // Use example for testing
-let example1 = { "companyName": "Clearbit", "stateCode": "CA" };
-let example2 = { "companyName": "Clearbit", "stateCode": "ma" };
-let example3 = { "companyName": "Clearbit", "stateCode": "ls" };
+// let example1 = { "companyName": "Clearbit", "stateCode": "CA" };
+// let example2 = { "companyName": "Clearbit", "stateCode": "ma" };
+// let example3 = { "companyName": "Clearbit", "stateCode": "ls" };
 
-
-// Function to take in user EXAMPLE and check against json data
-// const exampleMatch = (data, userExample) => {
-//   // console.log('stateName', stateName);
-//   // console.log('stateObject', data);
-//   let abbreviation = stringCleaner(userExample.stateCode);
-//   console.log(abbreviation);
-//   // Results will be the fulle state name spelled out. 
-//   let results = "Incorrect value";
-//   // Iterate over the stateObject (data) to see if the userExample matches any key in the stateObject
-//   for (let i in data) {
-//     // console. log(i);
-//     // Check to see if the abbreviation matches a key in any instance of a key in stateObject
-//     if (abbreviation === i) {
-//       results = data[i];
-//     }
-//   }
-//   return results;
-// }
 
 // console.log(exampleMatch(stateObject, example1));
-console.log(dataMatch(stateObject, userObject));
+console.log(dataMatch(stateObject));
